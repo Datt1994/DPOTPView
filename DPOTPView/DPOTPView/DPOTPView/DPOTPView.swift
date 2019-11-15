@@ -278,7 +278,7 @@ class OTPBackTextField: UITextField {
         return super.resignFirstResponder()
     }
     
-    func addSelectedBorderColor() {
+    fileprivate func addSelectedBorderColor() {
         if let selectedBorderColor = dpOTPView.selectedBorderColorTextField {
             if dpOTPView.isBottomLineTextField {
                 addBottomLine(selectedBorderColor)
@@ -288,7 +288,7 @@ class OTPBackTextField: UITextField {
         }
     }
     
-    func addUnselectedBorderColor() {
+    fileprivate func addUnselectedBorderColor() {
         if let unselectedBorderColor = dpOTPView.borderColorTextField {
             if dpOTPView.isBottomLineTextField {
                 addBottomLine(unselectedBorderColor)
@@ -298,7 +298,7 @@ class OTPBackTextField: UITextField {
         }
     }
     
-    func addBottomLine(_ color : UIColor) {
+    fileprivate func addBottomLine(_ color : UIColor) {
         let border = CALayer()
         border.name = "bottomBorderLayer"
         removePreviouslyAddedLayer(name: border.name ?? "")
@@ -315,7 +315,7 @@ class OTPBackTextField: UITextField {
         return bounds.inset(by: dpOTPView.editingTextEdgeInsets ?? UIEdgeInsets.zero)
     }
     
-    func removePreviouslyAddedLayer(name : String) {
+    fileprivate func removePreviouslyAddedLayer(name : String) {
         if self.layer.sublayers?.count ?? 0 > 0 {
             self.layer.sublayers?.forEach {
                 if $0.name == name {
