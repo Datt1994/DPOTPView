@@ -70,6 +70,9 @@ protocol DPOTPViewDelegate {
         }
     }
     
+    /** Dark keyboard*/
+    @IBInspectable var isDarkKeyboard: Bool = false
+    
     var textEdgeInsets : UIEdgeInsets?
     var editingTextEdgeInsets : UIEdgeInsets?
     
@@ -78,14 +81,10 @@ protocol DPOTPViewDelegate {
     var text : String? {
         get {
             var str = ""
-            arrTextFields.forEach { (textField) in
-                str.append(textField.text ?? "")
-            }
+            arrTextFields.forEach { str.append($0.text ?? "") }
             return str
         } set {
-            arrTextFields.forEach { (textField) in
-                textField.text = nil
-            }
+            arrTextFields.forEach { $0.text = nil }
             for i in 0 ..< arrTextFields.count {
                 if i < (newValue?.count ?? 0) {
                     if let txt = newValue?[i..<i+1] , let code = Int(txt) {
@@ -133,11 +132,8 @@ protocol DPOTPViewDelegate {
             textField.layer.backgroundColor = backGroundColorTextField.cgColor
             textField.isSecureTextEntry = isSecureTextEntry
             textField.font = fontTextField
-            if isCursorHidden {
-                let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-                textField.addGestureRecognizer(tap)
-                textField.tintColor = .clear
-            }
+            textField.keyboardAppearance = isDarkKeyboard ? .dark : .default
+            if isCursorHidden { textField.tintColor = .clear }
             if isBottomLineTextField {
                 let border = CALayer()
                 border.name = "bottomBorderLayer"
@@ -158,7 +154,7 @@ protocol DPOTPViewDelegate {
             }
             textField.textColor = textColorTextField
             textField.textAlignment = .center
-            textField.keyboardType = .numberPad
+            textField.keyboardType = .asciiCapableNumberPad
             if #available(iOS 12.0, *) {
                 textField.textContentType = .oneTimeCode
             }
@@ -225,6 +221,10 @@ protocol DPOTPViewDelegate {
 extension DPOTPView : UITextFieldDelegate , OTPBackTextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        if isCursorHidden {
+         (textField as? OTPBackTextField)?.addUnselectedBorderColor()
+         _ = self.becomeFirstResponder()
+        }
         dpOTPViewDelegate?.dpOTPViewChangePositionAt(textField.tag/1000 - 1)
     }
     
