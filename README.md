@@ -1,6 +1,7 @@
 # DPOTPView
-Customisable OTP view and Passcode view
 ![Look](https://github.com/Datt1994/DPOTPView/raw/master/Look.png)
+
+Customisable OTP view and Passcode view
 
 ## Installation with CocoaPods
 
