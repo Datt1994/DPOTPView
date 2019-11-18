@@ -49,6 +49,9 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isCircleTextField" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isCursorHidden" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="dismissOnLastEntry" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="selectedBorderWidthTextField">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XZU-8o-pmY" customClass="DPOTPView" customModule="DPOTPView" customModuleProvider="target">
@@ -69,6 +72,9 @@
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="dismissOnLastEntry" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="selectedBorderWidthTextField">
+                                        <real key="value" value="1.5"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XWD-DZ-vzi" customClass="DPOTPView" customModule="DPOTPView" customModuleProvider="target">
@@ -97,6 +103,13 @@
                                         <color key="value" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isDarkKeyboard" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="selectedBorderWidthTextField">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderTextColor">
+                                        <color key="value" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="✲✻✵✫✱✶"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DtP-Ci-7qP" customClass="DPOTPView" customModule="DPOTPView" customModuleProvider="target">
@@ -121,6 +134,9 @@
                                         <color key="value" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="dismissOnLastEntry" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="selectedBorderWidthTextField">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tOx-qg-TIm" customClass="DPOTPView" customModule="DPOTPView" customModuleProvider="target">
@@ -149,6 +165,9 @@
                                         <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isCursorHidden" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="selectedBorderWidthTextField">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>

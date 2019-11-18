@@ -24,14 +24,23 @@ protocol DPOTPViewDelegate {
     /** Spaceing between textField in the DPOTPView */
     @IBInspectable var spacing: CGFloat = 8
     
+    /** Text color for the textField */
+    @IBInspectable var textColorTextField: UIColor = UIColor.black
+    
+    /** Text font for the textField */
+    @IBInspectable var fontTextField: UIFont = UIFont.systemFont(ofSize: 25)
+    
+    /** Placeholder */
+    @IBInspectable var placeholder: String = ""
+    
+    /** Placeholder text color for the textField */
+    @IBInspectable var placeholderTextColor: UIColor = UIColor.gray
+    
     /** Circle textField */
     @IBInspectable var isCircleTextField: Bool = false
     
-    /** Text font for the textField */
-    @IBInspectable var fontTextField: UIFont = UIFont.systemFont(ofSize: 20) { didSet { setNeedsDisplay() } }
-    
-    /** Text color for the textField */
-    @IBInspectable var textColorTextField: UIColor = UIColor.black
+    /** Allow only Bottom Line for the TextField */
+    @IBInspectable var isBottomLineTextField: Bool = false
     
     /** Background color for the textField */
     @IBInspectable var backGroundColorTextField: UIColor = UIColor.clear
@@ -45,11 +54,11 @@ protocol DPOTPViewDelegate {
     /** Border width for the TextField */
     @IBInspectable var borderWidthTextField: CGFloat = 0.0
     
+    /** Border width for the TextField */
+    @IBInspectable var selectedBorderWidthTextField: CGFloat = 0.0
+    
     /** Corner radius for the TextField */
     @IBInspectable var cornerRadiusTextField: CGFloat = 0.0
-    
-    /** Allow only Bottom Line for the TextField */
-    @IBInspectable var isBottomLineTextField: Bool = false
     
     /** Tint/cursor color for the TextField */
     @IBInspectable var tintColorTextField: UIColor = UIColor.systemBlue
@@ -77,6 +86,7 @@ protocol DPOTPViewDelegate {
     var editingTextEdgeInsets : UIEdgeInsets?
     
     var dpOTPViewDelegate : DPOTPViewDelegate?
+    var keyboardType:UIKeyboardType = UIKeyboardType.asciiCapableNumberPad
     
     var text : String? {
         get {
@@ -100,25 +110,27 @@ protocol DPOTPViewDelegate {
     #if !TARGET_INTERFACE_BUILDER
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        initialization()
     }
     
     /** Override common init, for manual allocation */
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initialization()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.initialization()
     }
     #endif
     
-    func initialization() {
-        
+    override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        initialization()
     }
     
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
+    func initialization() {
         if arrTextFields.count != 0 { return }
-        // Drawing code
+        
         let sizeTextField = (self.bounds.width/CGFloat(count)) - (spacing)
         
         for i in 1 ... count {
@@ -154,9 +166,14 @@ protocol DPOTPViewDelegate {
             }
             textField.textColor = textColorTextField
             textField.textAlignment = .center
-            textField.keyboardType = .asciiCapableNumberPad
+            textField.keyboardType = keyboardType
             if #available(iOS 12.0, *) {
                 textField.textContentType = .oneTimeCode
+            }
+            
+            if placeholder.count > i - 1 {
+                textField.attributedPlaceholder = NSAttributedString(string: placeholder[i - 1],
+                attributes: [NSAttributedString.Key.foregroundColor: placeholderTextColor])
             }
             
             textField.frame = CGRect(x:(CGFloat(i-1) * sizeTextField) + (CGFloat(i) * spacing/2) + (CGFloat(i-1) * spacing/2)  , y: (self.bounds.height - sizeTextField)/2 , width: sizeTextField, height: sizeTextField)
@@ -164,19 +181,15 @@ protocol DPOTPViewDelegate {
             arrTextFields.append(textField)
             self.addSubview(textField)
         }
-        super.draw(rect)
     }
     
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        OperationQueue.main.addOperation({
-            if #available(iOS 13.0, *) {
-                UIMenuController.shared.hideMenu()
-            } else {
-                UIMenuController.shared.setMenuVisible(false, animated: false)
-            }
-        })
-        return super.canPerformAction(action, withSender: sender)
-    }
+//    // Only override draw() if you perform custom drawing.
+//    // An empty implementation adversely affects performance during animation.
+//    override func draw(_ rect: CGRect) {
+//
+//        super.draw(rect)
+//    }
+
     
     override func becomeFirstResponder() -> Bool {
         if isCursorHidden {
@@ -268,6 +281,19 @@ class OTPBackTextField: UITextField {
         OTPBackDelegate?.textFieldDidDelete(self)
     }
     
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+//        if action == #selector(UIResponderStandardEditActions.copy(_:)) ||
+//            action == #selector(UIResponderStandardEditActions.cut(_:)) ||
+//            action == #selector(UIResponderStandardEditActions.select(_:)) ||
+//            action == #selector(UIResponderStandardEditActions.selectAll(_:)) ||
+//            action == #selector(UIResponderStandardEditActions.delete(_:)) {
+//
+//            return false
+//        }
+//        return super.canPerformAction(action, withSender: sender)
+        return false
+    }
+    
     override func becomeFirstResponder() -> Bool {
         addSelectedBorderColor()
         return super.becomeFirstResponder()
@@ -281,9 +307,10 @@ class OTPBackTextField: UITextField {
     fileprivate func addSelectedBorderColor() {
         if let selectedBorderColor = dpOTPView.selectedBorderColorTextField {
             if dpOTPView.isBottomLineTextField {
-                addBottomLine(selectedBorderColor)
+                addBottomLine(selectedBorderColor, width: dpOTPView.selectedBorderWidthTextField)
             }  else {
                 layer.borderColor = selectedBorderColor.cgColor
+                layer.borderWidth = dpOTPView.selectedBorderWidthTextField
             }
         }
     }
@@ -291,19 +318,20 @@ class OTPBackTextField: UITextField {
     fileprivate func addUnselectedBorderColor() {
         if let unselectedBorderColor = dpOTPView.borderColorTextField {
             if dpOTPView.isBottomLineTextField {
-                addBottomLine(unselectedBorderColor)
+                addBottomLine(unselectedBorderColor, width: dpOTPView.borderWidthTextField)
             }  else {
                 layer.borderColor = unselectedBorderColor.cgColor
+                layer.borderWidth = dpOTPView.borderWidthTextField
             }
         }
     }
     
-    fileprivate func addBottomLine(_ color : UIColor) {
+    fileprivate func addBottomLine(_ color : UIColor , width : CGFloat) {
         let border = CALayer()
         border.name = "bottomBorderLayer"
         removePreviouslyAddedLayer(name: border.name ?? "")
         border.backgroundColor = color.cgColor
-        border.frame = CGRect(x: 0, y: self.frame.width - dpOTPView.borderWidthTextField,width : self.frame.width ,height: dpOTPView.borderWidthTextField)
+        border.frame = CGRect(x: 0, y: self.frame.width - width ,width : self.frame.width ,height: width)
         self.layer.addSublayer(border)
     }
     
