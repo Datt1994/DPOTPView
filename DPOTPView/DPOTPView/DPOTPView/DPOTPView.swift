@@ -63,6 +63,18 @@ protocol DPOTPViewDelegate {
     /** Tint/cursor color for the TextField */
     @IBInspectable var tintColorTextField: UIColor = UIColor.systemBlue
     
+    /** Shadow Radius for the TextField */
+    @IBInspectable var shadowRadiusTextField: CGFloat = 0.0
+    
+    /** Shadow Opacity for the TextField */
+    @IBInspectable var shadowOpacityTextField: Float = 0.0
+    
+    /** Shadow Offset Size for the TextField */
+    @IBInspectable var shadowOffsetSizeTextField: CGSize = .zero
+    
+    /** Shadow color for the TextField */
+    @IBInspectable var shadowColorTextField: UIColor?
+    
     /** Dismiss keyboard with enter last character*/
     @IBInspectable var dismissOnLastEntry: Bool = false
     
@@ -70,14 +82,7 @@ protocol DPOTPViewDelegate {
     @IBInspectable var isSecureTextEntry: Bool = false
     
     /** Hide cursor*/
-    @IBInspectable var isCursorHidden: Bool = false {
-        didSet {
-            if isCursorHidden {
-                let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-                self.addGestureRecognizer(tap)
-            }
-        }
-    }
+    @IBInspectable var isCursorHidden: Bool = false
     
     /** Dark keyboard*/
     @IBInspectable var isDarkKeyboard: Bool = false
@@ -158,12 +163,17 @@ protocol DPOTPViewDelegate {
                 textField.layer.borderWidth = borderWidthTextField
                 if isCircleTextField {
                     textField.layer.cornerRadius = sizeTextField / 2
-                    textField.layer.masksToBounds = true
                 } else {
                     textField.layer.cornerRadius = cornerRadiusTextField
-                    textField.layer.masksToBounds = cornerRadiusTextField > 0.0
                 }
             }
+            textField.layer.shadowRadius = shadowRadiusTextField
+            if let shadowColorTextField = shadowColorTextField {
+                textField.layer.shadowColor = shadowColorTextField.cgColor
+            }
+            textField.layer.shadowOpacity = shadowOpacityTextField
+            textField.layer.shadowOffset = shadowOffsetSizeTextField
+            
             textField.textColor = textColorTextField
             textField.textAlignment = .center
             textField.keyboardType = keyboardType
@@ -180,6 +190,13 @@ protocol DPOTPViewDelegate {
             
             arrTextFields.append(textField)
             self.addSubview(textField)
+            if isCursorHidden {
+                let tapView = UIView(frame: self.bounds)
+                tapView.backgroundColor = .clear
+                let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+                tapView.addGestureRecognizer(tap)
+                self.addSubview(tapView)
+            }
         }
     }
     
@@ -197,8 +214,9 @@ protocol DPOTPViewDelegate {
                 if arrTextFields[i].text?.count == 0 {
                     _ = arrTextFields[i].becomeFirstResponder()
                     break
-                } else if (arrTextFields.count - 1) == i{
+                } else if (arrTextFields.count - 1) == i {
                     _ = arrTextFields[i].becomeFirstResponder()
+                    break
                 }
             }
         } else {
@@ -234,10 +252,6 @@ protocol DPOTPViewDelegate {
 extension DPOTPView : UITextFieldDelegate , OTPBackTextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if isCursorHidden {
-         (textField as? OTPBackTextField)?.addUnselectedBorderColor()
-         _ = self.becomeFirstResponder()
-        }
         dpOTPViewDelegate?.dpOTPViewChangePositionAt(textField.tag/1000 - 1)
     }
     
@@ -312,6 +326,13 @@ class OTPBackTextField: UITextField {
                 layer.borderColor = selectedBorderColor.cgColor
                 layer.borderWidth = dpOTPView.selectedBorderWidthTextField
             }
+        } else {
+            if dpOTPView.isBottomLineTextField {
+                removePreviouslyAddedLayer(name: "bottomBorderLayer")
+            }  else {
+                layer.borderColor = nil
+                layer.borderWidth = 0
+            }
         }
     }
     
@@ -322,6 +343,13 @@ class OTPBackTextField: UITextField {
             }  else {
                 layer.borderColor = unselectedBorderColor.cgColor
                 layer.borderWidth = dpOTPView.borderWidthTextField
+            }
+        }  else {
+            if dpOTPView.isBottomLineTextField {
+                removePreviouslyAddedLayer(name: "bottomBorderLayer")
+            }  else {
+                layer.borderColor = nil
+                layer.borderWidth = 0
             }
         }
     }
