@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "DPOTPView"
-  s.version      = "1.5.3"
+  s.version      = "1.5.4"
   s.summary      = "Customisable OTP view and Passcode view."
 
   # This description is used to generate tags and improve search results.
@@ -71,7 +71,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
   # s.tvos.deployment_target = "9.0"
-  s.platform     = :ios, "10.0"
+  s.platform     = :ios
   s.swift_version = '5.0'
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #

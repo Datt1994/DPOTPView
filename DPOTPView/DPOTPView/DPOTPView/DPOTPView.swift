@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DPOTPViewDelegate {
+public protocol DPOTPViewDelegate {
     func dpOTPViewAddText(_ text:String , at position:Int)
     func dpOTPViewRemoveText(_ text:String , at position:Int)
     func dpOTPViewChangePositionAt(_ position:Int)
@@ -16,84 +16,84 @@ protocol DPOTPViewDelegate {
     func dpOTPViewResignFirstResponder()
 }
 
-@IBDesignable class DPOTPView: UIView {
+@IBDesignable public final class DPOTPView: UIView {
     
     /** The number of textField that will be put in the DPOTPView */
-    @IBInspectable var count: Int = 4
+    @IBInspectable public var count: Int = 4
     
     /** Spaceing between textField in the DPOTPView */
-    @IBInspectable var spacing: CGFloat = 8
+    @IBInspectable public var spacing: CGFloat = 8
     
     /** Text color for the textField */
-    @IBInspectable var textColorTextField: UIColor = UIColor.black
+    @IBInspectable public var textColorTextField: UIColor = UIColor.black
     
     /** Text font for the textField */
-    @IBInspectable var fontTextField: UIFont = UIFont.systemFont(ofSize: 25)
+    @IBInspectable public var fontTextField: UIFont = UIFont.systemFont(ofSize: 25)
     
     /** Placeholder */
-    @IBInspectable var placeholder: String = ""
+    @IBInspectable public var placeholder: String = ""
     
     /** Placeholder text color for the textField */
-    @IBInspectable var placeholderTextColor: UIColor = UIColor.gray
+    @IBInspectable public var placeholderTextColor: UIColor = UIColor.gray
     
     /** Circle textField */
-    @IBInspectable var isCircleTextField: Bool = false
+    @IBInspectable public var isCircleTextField: Bool = false
     
     /** Allow only Bottom Line for the TextField */
-    @IBInspectable var isBottomLineTextField: Bool = false
+    @IBInspectable public var isBottomLineTextField: Bool = false
     
     /** Background color for the textField */
-    @IBInspectable var backGroundColorTextField: UIColor = UIColor.clear
+    @IBInspectable public var backGroundColorTextField: UIColor = UIColor.clear
     
     /** Border color for the TextField */
-    @IBInspectable var borderColorTextField: UIColor?
+    @IBInspectable public var borderColorTextField: UIColor?
     
     /** Border color for the TextField */
-    @IBInspectable var selectedBorderColorTextField: UIColor?
+    @IBInspectable public var selectedBorderColorTextField: UIColor?
     
     /** Border width for the TextField */
-    @IBInspectable var borderWidthTextField: CGFloat = 0.0
+    @IBInspectable public var borderWidthTextField: CGFloat = 0.0
     
     /** Border width for the TextField */
-    @IBInspectable var selectedBorderWidthTextField: CGFloat = 0.0
+    @IBInspectable public var selectedBorderWidthTextField: CGFloat = 0.0
     
     /** Corner radius for the TextField */
-    @IBInspectable var cornerRadiusTextField: CGFloat = 0.0
+    @IBInspectable public var cornerRadiusTextField: CGFloat = 0.0
     
     /** Tint/cursor color for the TextField */
-    @IBInspectable var tintColorTextField: UIColor = UIColor.systemBlue
+    @IBInspectable public var tintColorTextField: UIColor = UIColor.systemBlue
     
     /** Shadow Radius for the TextField */
-    @IBInspectable var shadowRadiusTextField: CGFloat = 0.0
+    @IBInspectable public var shadowRadiusTextField: CGFloat = 0.0
     
     /** Shadow Opacity for the TextField */
-    @IBInspectable var shadowOpacityTextField: Float = 0.0
+    @IBInspectable public var shadowOpacityTextField: Float = 0.0
     
     /** Shadow Offset Size for the TextField */
-    @IBInspectable var shadowOffsetSizeTextField: CGSize = .zero
+    @IBInspectable public var shadowOffsetSizeTextField: CGSize = .zero
     
     /** Shadow color for the TextField */
-    @IBInspectable var shadowColorTextField: UIColor?
+    @IBInspectable public var shadowColorTextField: UIColor?
     
     /** Dismiss keyboard with enter last character*/
-    @IBInspectable var dismissOnLastEntry: Bool = false
+    @IBInspectable public var dismissOnLastEntry: Bool = false
     
     /** Secure Text Entry*/
-    @IBInspectable var isSecureTextEntry: Bool = false
+    @IBInspectable public var isSecureTextEntry: Bool = false
     
     /** Hide cursor*/
-    @IBInspectable var isCursorHidden: Bool = false
+    @IBInspectable public var isCursorHidden: Bool = false
     
     /** Dark keyboard*/
-    @IBInspectable var isDarkKeyboard: Bool = false
+    @IBInspectable public var isDarkKeyboard: Bool = false
     
-    var textEdgeInsets : UIEdgeInsets?
-    var editingTextEdgeInsets : UIEdgeInsets?
+    public var textEdgeInsets : UIEdgeInsets?
+    public var editingTextEdgeInsets : UIEdgeInsets?
     
-    var dpOTPViewDelegate : DPOTPViewDelegate?
-    var keyboardType:UIKeyboardType = UIKeyboardType.asciiCapableNumberPad
+    public var dpOTPViewDelegate : DPOTPViewDelegate?
+    public var keyboardType:UIKeyboardType = UIKeyboardType.asciiCapableNumberPad
     
-    var text : String? {
+    public var text : String? {
         get {
             var str = ""
             arrTextFields.forEach { str.append($0.text ?? "") }
@@ -113,22 +113,22 @@ protocol DPOTPViewDelegate {
     fileprivate var arrTextFields : [OTPBackTextField] = []
     /** Override coder init, for IB/XIB compatibility */
     #if !TARGET_INTERFACE_BUILDER
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     /** Override common init, for manual allocation */
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         self.initialization()
     }
     #endif
     
-    override func prepareForInterfaceBuilder() {
+    public override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         initialization()
     }
@@ -208,7 +208,7 @@ protocol DPOTPViewDelegate {
 //    }
 
     
-    override func becomeFirstResponder() -> Bool {
+    public override func becomeFirstResponder() -> Bool {
         if isCursorHidden {
             for i in 0 ..< arrTextFields.count {
                 if arrTextFields[i].text?.count == 0 {
@@ -226,7 +226,7 @@ protocol DPOTPViewDelegate {
         return super.becomeFirstResponder()
     }
     
-    override func resignFirstResponder() -> Bool {
+    public override func resignFirstResponder() -> Bool {
         arrTextFields.forEach { (textField) in
             _ = textField.resignFirstResponder()
         }
@@ -251,11 +251,11 @@ protocol DPOTPViewDelegate {
 
 extension DPOTPView : UITextFieldDelegate , OTPBackTextFieldDelegate {
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
         dpOTPViewDelegate?.dpOTPViewChangePositionAt(textField.tag/1000 - 1)
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string.trimmingCharacters(in: CharacterSet.whitespaces).count != 0 {
             textField.text = string
             if textField.tag < count*1000 {
