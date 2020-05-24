@@ -7,7 +7,25 @@
 		<key>DPOTPView.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>DPOTPView_Example.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>C6604BEA247B2037005F402D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C66FE3B3237BE8EC000CEBC2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
