@@ -10,7 +10,7 @@
 		C6604BEF247B2037005F402D /* DPOTPView.h in Headers */ = {isa = PBXBuildFile; fileRef = C6604BED247B2037005F402D /* DPOTPView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C6604BF2247B2037005F402D /* DPOTPView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6604BEB247B2037005F402D /* DPOTPView.framework */; };
 		C6604BF3247B2037005F402D /* DPOTPView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C6604BEB247B2037005F402D /* DPOTPView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C6604BF8247B20EA005F402D /* DPOTPView.swift in Headers */ = {isa = PBXBuildFile; fileRef = C66FE3CB237BE91F000CEBC2 /* DPOTPView.swift */; };
+		C6604BFA247B2DF2005F402D /* DPOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66FE3CB237BE91F000CEBC2 /* DPOTPView.swift */; };
 		C66FE3B8237BE8EC000CEBC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66FE3B7237BE8EC000CEBC2 /* AppDelegate.swift */; };
 		C66FE3BA237BE8EC000CEBC2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66FE3B9237BE8EC000CEBC2 /* SceneDelegate.swift */; };
 		C66FE3BC237BE8EC000CEBC2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66FE3BB237BE8EC000CEBC2 /* ViewController.swift */; };
@@ -136,7 +136,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6604BEF247B2037005F402D /* DPOTPView.h in Headers */,
-				C6604BF8247B20EA005F402D /* DPOTPView.swift in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +241,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6604BFA247B2DF2005F402D /* DPOTPView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
