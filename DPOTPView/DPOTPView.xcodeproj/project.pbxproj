@@ -18,7 +18,6 @@
 		C66FE3C1237BE8F6000CEBC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C66FE3C0237BE8F6000CEBC2 /* Assets.xcassets */; };
 		C66FE3C4237BE8F6000CEBC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C66FE3C2237BE8F6000CEBC2 /* LaunchScreen.storyboard */; };
 		C66FE3CC237BE91F000CEBC2 /* DPOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66FE3CB237BE91F000CEBC2 /* DPOTPView.swift */; };
-		C69DC8D924842A3100A39B61 /* DPOTPView.swift in Headers */ = {isa = PBXBuildFile; fileRef = C66FE3CB237BE91F000CEBC2 /* DPOTPView.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,7 +136,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6604BEF247B2037005F402D /* DPOTPView.h in Headers */,
-				C69DC8D924842A3100A39B61 /* DPOTPView.swift in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +305,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.7;
+				MARKETING_VERSION = 1.5.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.datt.DPOTPView;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -339,7 +337,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.7;
+				MARKETING_VERSION = 1.5.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.datt.DPOTPView;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
