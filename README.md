@@ -53,9 +53,10 @@ To integrate `DPOTPView` into your Xcode project using Carthage, specify it in y
 github "Datt1994/DPOTPView"
 ```
 
-Run `carthage` to build the frameworks and drag the framework (`DPOTPView.framework`) into your Xcode project.
+Run `carthage` to build the framework and drag the framework (`DPOTPView.framework`) into your Xcode project.
 
 Note: [IBDesignables and IBInspectables](https://github.com/Carthage/Carthage/issues/335) will not work in interface builder.
+
 Workaround: Create IBDesignable subclass of DPOTPView, Use this subclass as custom calss in interface builder.
 ```swift
 @IBDesignable
