@@ -63,6 +63,13 @@ Workaround: Create IBDesignable subclass of DPOTPView, Use this subclass as cust
 class OTPView : DPOTPView {}    
 ```
 
+## Installation with Swift Package Manager
+
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler.
+
+To add the library as package dependency to your Xcode project, select File > Swift Packages > Add Package Dependency and enter its repository URL `https://github.com/Datt1994/DPOTPView.git`
+
+
 ## Add Manually 
   
   Download Project and copy-paste `DPOTPView.swift` file into your project 
