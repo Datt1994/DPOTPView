@@ -10,5 +10,6 @@ let package = Package(name: "DPOTPView",
                       products: [.library(name: "DPOTPView",
                                           targets: ["DPOTPView"])],
                       targets: [.target(name: "DPOTPView",
-                                        path: "DPOTPView",
-                                        publicHeadersPath: "")])
+                                        path: "DPOTPView/DPOTPView/DPOTPView",
+                                        publicHeadersPath: "")],
+                      swiftLanguageVersions: [.v5])
