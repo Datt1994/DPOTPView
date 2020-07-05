@@ -45,6 +45,9 @@ public protocol DPOTPViewDelegate {
     /** Background color for the textField */
     @IBInspectable open dynamic var backGroundColorTextField: UIColor = UIColor.clear
     
+    /** Background color for the filled textField */
+    @IBInspectable open dynamic var backGroundColorFilledTextField: UIColor?
+    
     /** Border color for the TextField */
     @IBInspectable open dynamic var borderColorTextField: UIColor?
     
@@ -146,7 +149,7 @@ public protocol DPOTPViewDelegate {
             textField.borderStyle = .none
             textField.tag = i * 1000
             textField.tintColor = tintColorTextField
-            textField.layer.backgroundColor = backGroundColorTextField.cgColor
+            textField.backgroundColor = backGroundColorTextField
             textField.isSecureTextEntry = isSecureTextEntry
             textField.font = fontTextField
             textField.keyboardAppearance = isDarkKeyboard ? .dark : .default
@@ -285,10 +288,19 @@ protocol OTPBackTextFieldDelegate {
 }
 
 
-class OTPBackTextField: UITextField {
+fileprivate class OTPBackTextField: UITextField {
     
     var OTPBackDelegate : OTPBackTextFieldDelegate?
     weak var dpOTPView : DPOTPView!
+    override var text: String? {
+        didSet {
+            if text?.isEmpty ?? true {
+                self.backgroundColor = dpOTPView.backGroundColorTextField
+            } else {
+                self.backgroundColor = dpOTPView.backGroundColorFilledTextField ?? dpOTPView.backGroundColorTextField
+            }
+        }
+    }
     
     override func deleteBackward() {
         super.deleteBackward()
@@ -383,7 +395,7 @@ class OTPBackTextField: UITextField {
 }
 
 
-extension String {
+fileprivate extension String {
     subscript(_ i: Int) -> String {
         let idx1 = index(startIndex, offsetBy: i)
         let idx2 = index(idx1, offsetBy: 1)
