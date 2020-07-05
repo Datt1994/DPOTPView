@@ -1,6 +1,6 @@
 # DPOTPView
 [![Platform](https://img.shields.io/cocoapods/p/DPOTPView.svg?style=flat)](http://cocoapods.org/pods/DPOTPView)
-[![Language: Swift 5](https://img.shields.io/badge/language-swift5-f48041.svg?style=flat-square)](https://developer.apple.com/swift)
+[![Language: Swift 5](https://img.shields.io/badge/language-swift5-f48041.svg?style=flat)](https://developer.apple.com/swift)
 [![License](https://img.shields.io/cocoapods/l/DPOTPView.svg?style=flat)](https://github.com/Datt1994/DPOTPView/blob/master/LICENSE)
 [![Version](https://img.shields.io/cocoapods/v/DPOTPView.svg?style=flat)](http://cocoapods.org/pods/DPOTPView)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
