@@ -19,7 +19,18 @@ public protocol DPOTPViewDelegate {
 @IBDesignable open class DPOTPView: UIView {
     
     /** The number of textField that will be put in the DPOTPView */
-    @IBInspectable open dynamic var count: Int = 4
+    @IBInspectable open dynamic var count: Int = 4 {
+        didSet {
+            if isLoaded {
+                isLoaded = false
+                let isFirstResponder = arrTextFields.filter({$0.isFirstResponder}).first != nil
+                initialization()
+                if isFirstResponder {
+                    becomeFirstResponder()
+                }
+            }
+        }
+    }
     
     /** Spaceing between textField in the DPOTPView */
     @IBInspectable open dynamic var spacing: CGFloat = 8
@@ -41,6 +52,9 @@ public protocol DPOTPViewDelegate {
     
     /** Allow only Bottom Line for the TextField */
     @IBInspectable open dynamic var isBottomLineTextField: Bool = false
+    
+    /** Background Image for all  textFields */
+    @IBInspectable open dynamic var backGroundImageTextField: UIImage?
     
     /** Background color for the textField */
     @IBInspectable open dynamic var backGroundColorTextField: UIColor = UIColor.clear
@@ -93,6 +107,9 @@ public protocol DPOTPViewDelegate {
     open dynamic var textEdgeInsets : UIEdgeInsets?
     open dynamic var editingTextEdgeInsets : UIEdgeInsets?
     
+    open dynamic var inputViewForAll: UIView?
+    open dynamic var inputAccessoryViewForAll: UIView?
+    
     open dynamic var dpOTPViewDelegate : DPOTPViewDelegate?
     open dynamic var keyboardType:UIKeyboardType = UIKeyboardType.asciiCapableNumberPad
     
@@ -114,6 +131,7 @@ public protocol DPOTPViewDelegate {
     }
     
     fileprivate var arrTextFields : [OTPBackTextField] = []
+    fileprivate var isLoaded = false
     /** Override coder init, for IB/XIB compatibility */
     #if !TARGET_INTERFACE_BUILDER
     public required init?(coder aDecoder: NSCoder) {
@@ -137,7 +155,9 @@ public protocol DPOTPViewDelegate {
     }
     
     func initialization() {
-        if arrTextFields.count != 0 { return }
+        if isLoaded { return }
+        arrTextFields.forEach{ $0.removeFromSuperview() }
+        arrTextFields = []
         
         let sizeTextField = (self.bounds.width/CGFloat(count)) - (spacing)
         
@@ -150,10 +170,17 @@ public protocol DPOTPViewDelegate {
             textField.tag = i * 1000
             textField.tintColor = tintColorTextField
             textField.backgroundColor = backGroundColorTextField
+            textField.background = backGroundImageTextField
             textField.isSecureTextEntry = isSecureTextEntry
             textField.font = fontTextField
             textField.keyboardAppearance = isDarkKeyboard ? .dark : .default
-            if isCursorHidden { textField.tintColor = .clear }
+            textField.inputView = inputViewForAll
+            textField.inputAccessoryView = inputAccessoryViewForAll
+            if isCursorHidden {
+                textField.tintColor = .clear
+            } else {
+                textField.tintColor = tintColor
+            }
             if isBottomLineTextField {
                 let border = CALayer()
                 border.name = "bottomBorderLayer"
@@ -200,6 +227,7 @@ public protocol DPOTPViewDelegate {
                 tapView.addGestureRecognizer(tap)
                 self.addSubview(tapView)
             }
+            isLoaded = true
         }
     }
     
@@ -210,8 +238,14 @@ public protocol DPOTPViewDelegate {
 //        super.draw(rect)
 //    }
 
-    
+    @discardableResult
     open override func becomeFirstResponder() -> Bool {
+        if arrTextFields.count != count {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.becomeFirstResponder()
+            }
+            return false
+        }
         if isCursorHidden {
             for i in 0 ..< arrTextFields.count {
                 if arrTextFields[i].text?.count == 0 {
@@ -223,12 +257,13 @@ public protocol DPOTPViewDelegate {
                 }
             }
         } else {
-            _ = arrTextFields[0].becomeFirstResponder()
+            _ = arrTextFields.first?.becomeFirstResponder()
         }
         dpOTPViewDelegate?.dpOTPViewBecomeFirstResponder()
         return super.becomeFirstResponder()
     }
     
+    @discardableResult
     open override func resignFirstResponder() -> Bool {
         arrTextFields.forEach { (textField) in
             _ = textField.resignFirstResponder()
@@ -241,7 +276,7 @@ public protocol DPOTPViewDelegate {
         _ = self.becomeFirstResponder()
     }
     
-    func validate() -> Bool {
+    open func validate() -> Bool {
         var isValid = true
         arrTextFields.forEach { (textField) in
             if Int(textField.text ?? "") == nil {
