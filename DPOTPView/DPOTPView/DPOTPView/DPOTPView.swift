@@ -411,11 +411,11 @@ fileprivate class OTPBackTextField: UITextField {
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: dpOTPView.textEdgeInsets ?? UIEdgeInsets.zero)
+        return bounds.inset(by: dpOTPView?.textEdgeInsets ?? UIEdgeInsets.zero)
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: dpOTPView.editingTextEdgeInsets ?? UIEdgeInsets.zero)
+        return bounds.inset(by: dpOTPView?.editingTextEdgeInsets ?? UIEdgeInsets.zero)
     }
     
     fileprivate func removePreviouslyAddedLayer(name : String) {
