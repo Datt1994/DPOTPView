@@ -318,14 +318,14 @@ extension DPOTPView : UITextFieldDelegate , OTPBackTextFieldDelegate {
     }
 }
 
-protocol OTPBackTextFieldDelegate {
+protocol OTPBackTextFieldDelegate: AnyObject {
     func textFieldDidDelete(_ textField : UITextField)
 }
 
 
 fileprivate class OTPBackTextField: UITextField {
     
-    var OTPBackDelegate : OTPBackTextFieldDelegate?
+    weak var OTPBackDelegate : OTPBackTextFieldDelegate?
     weak var dpOTPView : DPOTPView!
     override var text: String? {
         didSet {
