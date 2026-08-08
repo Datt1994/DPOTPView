@@ -9,60 +9,6 @@
 
 Customisable OTP view and Passcode view
 
-## Installation with CocoaPods
-
-[CocoaPods](http://cocoapods.org) is a dependency manager for Objective-C & Swift. You can install it with the following command:
-
-```bash
-$ gem install cocoapods
-```
-#### Podfile
-
-To integrate DPOTPView into your Xcode project using CocoaPods, specify it in your `Podfile`:
-
-```ruby
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
-
-target 'TargetName' do
-use_frameworks!
-pod 'DPOTPView'
-end
-```
-
-Then, run the following command:
-
-```bash
-$ pod install
-```
-
-## Installation with Carthage
-
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
-
-You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
-
-```bash
-$ brew update
-$ brew install carthage
-```
-
-To integrate `DPOTPView` into your Xcode project using Carthage, specify it in your `Cartfile`:
-
-```ogdl
-github "Datt1994/DPOTPView"
-```
-
-Run `carthage` to build the framework and drag the framework (`DPOTPView.framework`) into your Xcode project.
-
-Note: [IBDesignables and IBInspectables](https://github.com/Carthage/Carthage/issues/335) will not work in interface builder.
-
-Workaround: Create IBDesignable subclass of DPOTPView, Use this subclass as custom calss in interface builder.
-```swift
-@IBDesignable
-class OTPView : DPOTPView {}    
-```
-
 ## Installation with Swift Package Manager
 
 The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler.

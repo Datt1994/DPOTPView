@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol DPOTPViewDelegate {
+public protocol DPOTPViewDelegate: NSObjectProtocol {
     func dpOTPViewAddText(_ text:String , at position:Int)
     func dpOTPViewRemoveText(_ text:String , at position:Int)
     func dpOTPViewChangePositionAt(_ position:Int)
@@ -110,7 +110,7 @@ public protocol DPOTPViewDelegate {
     open dynamic var inputViewForAll: UIView?
     open dynamic var inputAccessoryViewForAll: UIView?
     
-    open dynamic var dpOTPViewDelegate : DPOTPViewDelegate?
+    open dynamic weak var dpOTPViewDelegate : DPOTPViewDelegate?
     open dynamic var keyboardType:UIKeyboardType = UIKeyboardType.asciiCapableNumberPad
     
     open dynamic var text : String? {
@@ -148,6 +148,11 @@ public protocol DPOTPViewDelegate {
         self.initialization()
     }
     #endif
+    
+    deinit {
+        print("deinit: \(self)")
+        arrTextFields.forEach{ $0.removeFromSuperview() }
+    }
     
     open override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
@@ -318,21 +323,21 @@ extension DPOTPView : UITextFieldDelegate , OTPBackTextFieldDelegate {
     }
 }
 
-protocol OTPBackTextFieldDelegate: AnyObject {
-    func textFieldDidDelete(_ textField : UITextField)
+protocol OTPBackTextFieldDelegate: NSObjectProtocol {
+    func textFieldDidDelete(_ textField: UITextField)
 }
 
 
 fileprivate class OTPBackTextField: UITextField {
     
     weak var OTPBackDelegate : OTPBackTextFieldDelegate?
-    weak var dpOTPView : DPOTPView!
+    weak var dpOTPView : DPOTPView?
     override var text: String? {
         didSet {
             if text?.isEmpty ?? true {
-                self.backgroundColor = dpOTPView.backGroundColorTextField
+                self.backgroundColor = dpOTPView?.backGroundColorTextField
             } else {
-                self.backgroundColor = dpOTPView.backGroundColorFilledTextField ?? dpOTPView.backGroundColorTextField
+                self.backgroundColor = dpOTPView?.backGroundColorFilledTextField ?? dpOTPView?.backGroundColorTextField
             }
         }
     }
@@ -366,6 +371,7 @@ fileprivate class OTPBackTextField: UITextField {
     }
     
     fileprivate func addSelectedBorderColor() {
+        guard let dpOTPView else { return }
         if let selectedBorderColor = dpOTPView.selectedBorderColorTextField {
             if dpOTPView.isBottomLineTextField {
                 addBottomLine(selectedBorderColor, width: dpOTPView.selectedBorderWidthTextField)
@@ -384,6 +390,7 @@ fileprivate class OTPBackTextField: UITextField {
     }
     
     fileprivate func addUnselectedBorderColor() {
+        guard let dpOTPView else { return }
         if let unselectedBorderColor = dpOTPView.borderColorTextField {
             if dpOTPView.isBottomLineTextField {
                 addBottomLine(unselectedBorderColor, width: dpOTPView.borderWidthTextField)
